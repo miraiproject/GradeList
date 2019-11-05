@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import GradeForm
 
 # Create your views here.
-def detail(request):
+def user(request):
     """ユーザーページ"""
     if request.method == 'POST':
         form = GradeForm(request.POST)
@@ -11,4 +11,4 @@ def detail(request):
             form = forms.GradeForm()
     else:
         form = forms.GradeForm()
-    return render(request, 'grades/detail.html', {'grade': grade, 'form': form, 'score': score})
+    return render(request, 'grades/user.html', {'grade': grade, 'form': form, 'score': score})
