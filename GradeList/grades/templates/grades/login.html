@@ -1,0 +1,20 @@
+{% extends 'grades/base.html' %}
+{% block content %}
+<html>
+    
+    <form class="form-signin"  method="post" >{% csrf_token %}
+            {% if form.errors %}
+                <p>ユーザー名かパスワードが間違っています。もう一度入力してください。</p>
+            {% endif %}
+            <div class = "login-container">
+            <label>ユーザー名</label>
+            <input name="username">
+            <br>
+            <label>パスワード</label>
+            <input type="password" name="password">
+            <br>
+            </div>
+            <input type="submit" value="ログイン" class="login-btn">
+        </form>
+        </html>
+{% endblock %}

@@ -150,3 +150,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 WAGTAIL_SITE_NAME = 'Grade List'
+
+#ログイン、ログアウト
+LOGIN_URL = 'grades:login'
+LOGIN_REDIRECT_URL = '/users/1'
+LOGOUT_REDIRECT_URL = 'grades:logout_done'
