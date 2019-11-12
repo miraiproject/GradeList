@@ -11,7 +11,11 @@ class Grades(models.Model):
     english = models.PositiveIntegerField()
     math = models.PositiveIntegerField()
     japanese = models.PositiveIntegerField()
-    
+
+    def calculate_total(self, english, math, japanese):
+        total = english + math + japanese
+        total.save()
+        
     def calculate_gpa(self, english, math, japanese):
         self.score = [english, math, japanese]
         gp = []
