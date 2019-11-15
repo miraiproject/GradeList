@@ -7,11 +7,12 @@ from statistics import mean
         
 class Grades(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#    subject = models.CharField(max_length=50, null=False)
+    subject = models.CharField(max_length=50, null=False)
     english = models.PositiveIntegerField()
     math = models.PositiveIntegerField()
     japanese = models.PositiveIntegerField()
     
+
     def calculate_gpa(self, english, math, japanese):
         self.score = [english, math, japanese]
         gp = []
