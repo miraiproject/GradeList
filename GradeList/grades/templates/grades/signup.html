@@ -17,9 +17,9 @@
     {{ form.password2 }}
     {{ form.password2.errors }}
     <br>
-    <input type="submit" value="登録する">
+    <button type="submit">登録する</button>
 </form>
 
-<p><a href="{% url 'grades:login' %}">ログインはこちら</a></p>
+<p>ログインは<a href="{% url 'grades:login' %}">こちら</a></p>
 
 {% endblock %}

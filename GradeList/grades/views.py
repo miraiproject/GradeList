@@ -12,10 +12,10 @@ def user(request):
         form = GradeForm(request.POST)
         if form.is_valid():
             score = form.save(commmit=False)
-            form = forms.GradeForm()
+            form = GradeForm()
     else:
-        form = forms.GradeForm()
-    return render(request, 'grades/user.html', {'grade': grade, 'form': form, 'score': score,})
+        form = GradeForm()
+    return render(request, 'grades/user.html', {'form': form})
 
 
 

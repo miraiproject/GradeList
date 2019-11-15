@@ -1,10 +1,7 @@
 {% extends 'grades/base.html' %}
 {% block content %}
 
-<h2 class="user-name">@{{ username }}</h2>
-<h2 class = "user-id">{{userid}}</h2>
 
-
-<a href="{% url 'grades:logout' %}">ログアウト</a>
+<a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
 
 {% endblock %}
