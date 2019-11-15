@@ -2,6 +2,8 @@
 
 {% block content %}
 <h2>{{ request.user.username }}さんのページ</h2>
+<a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
+
 {% if request.user.is_authenticated %}
 <h3>あなたの成績</h3>
 <table border='1'>
