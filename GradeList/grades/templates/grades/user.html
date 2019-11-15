@@ -1,7 +1,9 @@
 {% extends 'grades/base.html' %}
 
 {% block content %}
+<h2>{{ request.user.username }}さんのページ</h2>
 {% if request.user.is_authenticated %}
+<h3>あなたの成績</h3>
 <table border='1'>
   <tr>
     <th>ユーザー名</th>
@@ -11,14 +13,15 @@
     <th>GPA</th>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>{{ request.user.username }}</td>
+    <td>{{ grade.english }}</td>
+    <td>{{ grade.math }}</td>
+    <td>{{ grade.japanese }}</td>
+    <td>{{ grade.gpa }}</td>
   </tr>
 </table>
-
+<br>
+<h3>ランキング</h3>
 <table border='1'>
   <tr>
     <th>順位</th>
@@ -27,31 +30,32 @@
   </tr>
   {% for rank in ranks %}
   <tr>
-    <td>{{ rank.rank }}</td>
+    <td>{{ rank.id }}</td>
     <td>{{ rank.user }}</td>
     <td>{{ rank.total }}</td>
   </tr>
   {% endfor %}
 </table>
 
-<p>平均点</p>
+<p>平均点：{{ average }}</p>
 
 {% endif %}
 <hr>
 {% if request.user.is_superuser %}
+<h3>成績入力フォーム</h3>
 <form method="POST" action="">
   {% csrf_token %}
-  成績入力欄<br>
-  {{ form.user.label }}:
+  <br>
+  名前:
   {{ form.user }}
   <br>
-  {{ form.english.label }}:
+  英語:
   {{ form.english }}
   <br>
-  {{ form.math.label }}:
+  数学:
   {{ form.math }}
   <br>
-  {{ form.japanese.label }}:
+  国語:
   {{ form.japanese }}
   <br>
   <a href="{% url 'grades:user' %}">
