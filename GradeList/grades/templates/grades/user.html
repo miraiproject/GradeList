@@ -1,2 +1,7 @@
-{% extends 'grades.base.html' %}
+{% extends 'grades/base.html' %}
+{% block content %}
 
+
+<a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
+
+{% endblock %}
