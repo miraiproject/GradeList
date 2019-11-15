@@ -7,9 +7,6 @@ from statistics import mean
         
 class Grades(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-<<<<<<< HEAD
-=======
-    subject = models.CharField(max_length=50, null=False)
 >>>>>>> 993c3b1bb0d00c2d268c10b020ce0642aabb18c3
     english = models.PositiveIntegerField()
     math = models.PositiveIntegerField()
