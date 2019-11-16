@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login 
 
-from .forms import GradeForm, ObjectionForm
-from .models import Grades, Objections
+from .forms import GradeForm, ObjectionForm,ProfileForm
+from .models import Grades, Objections,Profile
 
 from statistics import mean
 
@@ -114,3 +114,47 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'grades/signup.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    profile_1 =  Profile.objects.filter(user__username__exact=request.user).first()
+    if profile_1 == None:
+        if request.method == "POST":
+            form = ProfileForm(request.POST)
+            if form.is_valid():
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
+            return redirect('grades:profile_detail')
+        else:
+            form = ProfileForm
+        return render(request, 'grades/profile.html',{
+            'form':form,
+            })
+    else:
+        return redirect('grades:profile_done')
+
+@login_required
+def profile_detail(request):
+    user = request.user
+    # profiles = user.profile_set.all().first()
+    profiles = Profile.objects.filter(user__username__exact=request.user)
+    username = user.username
+    return render(request, 'grades/profile_detail.html', {'user':user,'profiles':profiles})
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    profiles = Profile.objects.filter(user__username__exact=request.user).first()
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=profiles)
+        if form.is_valid():
+            form.save()
+            return redirect('grades:profile_detail')
+    else:
+        form = ProfileForm(instance=profiles)
+    return render(request, 'grades/edit_profile.html', {'form': form, 'user':user })
+
+def profile_done(request):
+    return render(request, 'grades/profile_done.html')

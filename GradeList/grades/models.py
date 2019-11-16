@@ -21,3 +21,11 @@ class Objections(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+class Profile(models.Model):
+    name = models.CharField(max_length=50)
+    student_number = models.IntegerField()
+    major = models.CharField(max_length=50)
+    grade = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
