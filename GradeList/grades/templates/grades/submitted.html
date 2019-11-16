@@ -1,0 +1,8 @@
+{% extends 'grades/base.html' %}
+
+{% block content %}
+<p>送信しました。</p>
+<a href="{% url 'grades:user' %}">
+  <button>戻る</button>
+</a>
+{% endblock %}

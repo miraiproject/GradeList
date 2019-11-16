@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login 
 
-from .forms import GradeForm
-from .models import Grades
+from .forms import GradeForm, ObjectionForm
+from .models import Grades, Objections
 
 from statistics import mean
 
@@ -13,28 +13,31 @@ from statistics import mean
 # Create your views here.
 def user(request):
     """ユーザーページ"""
+    """成績表示"""
     try:
         grade = Grades.objects.get(user=request.user)
     except Grades.DoesNotExist:
         grade = Grades(user=request.user)
         grade.save()
 
+    """成績入力フォーム"""
 #    import pdb; pdb.set_trace()
     if request.method == 'POST':
-        form = GradeForm(request.POST)
-        if form.is_valid():
-            new_grade = form.save(commit=False)
+        g_form = GradeForm(request.POST)
+        if g_form.is_valid():
+            new_grade = g_form.save(commit=False)
             delete_grade = Grades.objects.get(user=new_grade.user)
             delete_grade.delete()
             new_grade.save()
-            form = GradeForm()
+            g_form = GradeForm()
     else:
-        form = GradeForm()
+        g_form = GradeForm()
 
     grades = Grades.objects.all()
     totals = []
     for i in range(len(grades)):
         grades[i].total = grades[i].english + grades[i].math + grades[i].japanese
+        grades[i].gpa = 0.0
         grades[i].save()
         totals.append(grades[i].total)
     average = [total / len(grades) for total in totals]
@@ -61,8 +64,25 @@ def user(request):
     grade.gpa = round(mean(gp), 2)
     grade.save()
 
+    """異議申立入力フォーム"""
+    objections = Objections.objects.all()
+    
+    if request.method == 'POST':
+        o_form = ObjectionForm(request.POST)
+        if o_form.is_valid():
+            objection = o_form.save(commit=False)
+            objection.author = request.user
+            objection.save()
+            o_form = ObjectionForm()
+    else:
+        o_form = ObjectionForm()
 
-    return render(request, 'grades/user.html', {'form': form, 'average': average, 'ranks': ranks, 'grade': grade})
+
+
+    return render(request, 'grades/user.html', {'g_form': g_form, 'o_form': o_form, 'average': average, 'ranks': ranks, 'grade': grade, 'objections': objections})
+
+def submitted(request):
+    return render(request, 'grades/submitted.html')
 
 
 @login_required
