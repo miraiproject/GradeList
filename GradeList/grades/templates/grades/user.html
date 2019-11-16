@@ -41,6 +41,19 @@
 
 <p>平均点：{{ average }}</p>
 
+<hr>
+<h3>異議申立入力フォーム</h3>
+<form method="POST" action="">
+  {% csrf_token %}
+  <br>
+  申立内容：
+  {{ o_form.text }}
+  <br>
+  <a href="{% url 'grades:submitted' %}">
+    <button type="submit">送信</button>
+  </a>
+</form>
+  
 {% endif %}
 <hr>
 {% if request.user.is_superuser %}
@@ -48,22 +61,32 @@
 <form method="POST" action="">
   {% csrf_token %}
   <br>
-  名前:
-  {{ form.user }}
+  名前：
+  {{ g_form.user }}
   <br>
-  英語:
-  {{ form.english }}
+  英語：
+  {{ g_form.english }}
   <br>
-  数学:
-  {{ form.math }}
+  数学：
+  {{ g_form.math }}
   <br>
-  国語:
-  {{ form.japanese }}
+  国語：
+  {{ g_form.japanese }}
   <br>
   <a href="{% url 'grades:user' %}">
     <button type="submit">保存</button>
   </a>
 </form>
+
+<hr>
+<h3>ユーザーからの異議申立</h3>
+<br>
+{% for objection in objections %}
+<p>{{ objection.author }}が{{ objection.created_at }}に投稿</p>
+<p>申立内容：{{ objection.text }}</p>
+<hr>
+{% endfor %}
+
 {% endif %}
 
 {% endblock %}
