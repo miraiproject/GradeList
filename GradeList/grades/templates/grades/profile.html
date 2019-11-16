@@ -1,0 +1,7 @@
+{% extends 'grades/base.html' %}
+{% block content %}
+<h1>個人情報登録</h1>
+<form action="{% url 'grades:profile' %}" method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">保存</button>
+</form>{% endblock %}
