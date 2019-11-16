@@ -11,7 +11,12 @@ class Grades(models.Model):
     math = models.PositiveIntegerField(default=0)
     japanese = models.PositiveIntegerField(default=0)
     total = models.PositiveIntegerField(default=0)
-    gpa = models.PositiveIntegerField(default=0)
+    gpa = models.FloatField(default=0)
 
     def __str__(self):
         return self.user.username
+
+class Objections(models.Model):
+    text = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
