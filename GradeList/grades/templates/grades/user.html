@@ -3,6 +3,7 @@
 {% block content %}
 <h2>{{ request.user.username }}さんのページ</h2>
 <a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
+<a href="{% url 'grades:profile' %}"><button>プロフィール</button></a>
 
 {% if request.user.is_authenticated %}
 <h3>あなたの成績</h3>
@@ -41,6 +42,19 @@
 
 <p>平均点：{{ average }}</p>
 
+{% if not request.user.is_superuser %}
+<hr>
+<h3>異議申立内容</h3>
+{% for objection in user_objections %}
+<p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
+<p>申立内容{{ objection.text }}</p>
+<hr>
+{% for reply in objection.replies_set.all %}
+<p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
+<p>回答：{{ reply.text }}</p>
+<hr>
+{% endfor %}
+{% endfor %}
 <hr>
 <h3>異議申立入力フォーム</h3>
 <form method="POST" action="">
@@ -53,6 +67,7 @@
     <button type="submit">送信</button>
   </a>
 </form>
+{% endif %}
   
 {% endif %}
 <hr>
@@ -82,9 +97,15 @@
 <h3>ユーザーからの異議申立</h3>
 <br>
 {% for objection in objections %}
-<p>{{ objection.author }}が{{ objection.created_at }}に投稿</p>
+<p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
 <p>申立内容：{{ objection.text }}</p>
+<a href="{% url 'grades:reply' objection_id=objection.id %}"><button>回答する</button></a>
 <hr>
+{% for reply in objection.replies_set.all %}
+<p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
+<p>回答：{{ reply.text }}</p>
+<hr>
+{% endfor %}
 {% endfor %}
 
 {% endif %}

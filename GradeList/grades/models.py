@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from statistics import mean
-
 # Create your models here.
         
 class Grades(models.Model):
@@ -20,6 +18,12 @@ class Objections(models.Model):
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Replies(models.Model):
+    text = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    target = models.ForeignKey(Objections, on_delete=models.CASCADE)
 
 
 class Profile(models.Model):

@@ -1,16 +1,17 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login 
 
-from .forms import GradeForm, ObjectionForm,ProfileForm
-from .models import Grades, Objections,Profile
+from .forms import GradeForm, ObjectionForm, ReplyForm, ProfileForm
+from .models import Grades, Objections, Replies, Profile
 
 from statistics import mean
 
 
 # Create your views here.
+@login_required
 def user(request):
     """ユーザーページ"""
     """成績表示"""
@@ -40,7 +41,7 @@ def user(request):
         grades[i].gpa = 0.0
         grades[i].save()
         totals.append(grades[i].total)
-    average = [total / len(grades) for total in totals]
+    average = sum(totals) /  len(grades)
     ranks = Grades.objects.all().order_by('-total')
     for i in range(len(ranks)):
         ranks[i].id = i + 1
@@ -73,17 +74,41 @@ def user(request):
             objection = o_form.save(commit=False)
             objection.author = request.user
             objection.save()
-            o_form = ObjectionForm()
+            o_form = ObjectionForm() 
+        return redirect('grades:submitted')
     else:
         o_form = ObjectionForm()
 
+    user_objections = Objections.objects.filter(author=request.user)
+    
+    """異議申立回答表示"""
+    replies = Replies.objects.all()
 
+    return render(request, 'grades/user.html', {'g_form': g_form, 'o_form': o_form, 'average': average, 'ranks': ranks, 'grade': grade, 'objections': objections, 'user_objections': user_objections, 'replies': replies})
 
-    return render(request, 'grades/user.html', {'g_form': g_form, 'o_form': o_form, 'average': average, 'ranks': ranks, 'grade': grade, 'objections': objections})
-
+@login_required
 def submitted(request):
     return render(request, 'grades/submitted.html')
 
+@login_required
+def reply(request, objection_id):
+    """異議申立返信フォーム"""
+    objection = Objections.objects.get(id=objection_id)
+    replies = Replies.objects.filter(target=objection)
+
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.target = objection
+            reply.save()
+            reply = ReplyForm()
+        return redirect('grades:submitted')
+    else:
+        form = ReplyForm()
+
+    return render(request, 'grades/reply.html', {'form': form, 'objection': objection})
 
 @login_required
 def users_detail(request):
@@ -110,7 +135,7 @@ def signup(request):
             if new_user is not None:
                 # loginメソッドは、認証ができてなくてもログインさせることができる。→上のauthenticateで認証を実行する
                 login(request, new_user)
-                return redirect('grades:users_detail')
+                return redirect('grades:user')
     else:
         form = UserCreationForm()
     return render(request, 'grades/signup.html', {'form': form})

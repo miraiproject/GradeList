@@ -1,5 +1,5 @@
 from django import forms
-from .models import Grades, Objections, Profile
+from .models import Grades, Objections, Replies, Profile
 
 class GradeForm(forms.ModelForm):
     class Meta:
@@ -11,6 +11,10 @@ class ObjectionForm(forms.ModelForm):
         model = Objections
         fields = ('text',)
 
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Replies
+        fields = ('text',)
 
 class ProfileForm(forms.ModelForm):
     class Meta:
