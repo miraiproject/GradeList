@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #以下を追加
     'rest_framework',
+    'corsheaders',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -69,9 +70,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     #以下を追加
+    'corsheaders.middleware.CorsMiddleware',
+    
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
+
+#追加
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000/'
+)
 
 ROOT_URLCONF = 'GradeList.urls'
 
