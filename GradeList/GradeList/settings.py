@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #以下を追加
     'rest_framework',
+    'rest_framework_swagger',
     'corsheaders',
 
     'wagtail.contrib.forms',
@@ -80,12 +81,14 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 #追加
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000/'
+    'http://localhost:3000',
+    'http://localhost:8000'
 )
 
 
