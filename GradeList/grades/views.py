@@ -2,15 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, login 
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 
 from .forms import GradeForm, ObjectionForm, ReplyForm, ProfileForm
 from .models import Grades, Objections, Replies, Profile
+from .serializers import UserSerializer, GradesSerializer, ObjectionsSerializer, RepliesSerializer, ProfileSerializer
+
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from statistics import mean
 
 
 # Create your views here.
+@api_view(['GET','POST'])
 @login_required
 def user(request):
     """ユーザーページ"""
@@ -84,29 +91,39 @@ def user(request):
     """異議申立回答表示"""
     replies = Replies.objects.all()
 
-    return render(request, 'grades/user.html', {'g_form': g_form, 'o_form': o_form, 'average': average, 'ranks': ranks, 'grade': grade, 'objections': objections, 'user_objections': user_objections, 'replies': replies})
+    user = User.objects.get(username=request.user.username)
+    user = UserSerializer(user)
+    grades = GradesSerializer(grades, many=True)
+    objection = ObjectionsSerializer(user_objections, many=True)
+
+    return Response(user.data)
+#    return render(request, 'grades/user.html', {'g_form': g_form, 'o_form': o_form, 'average': average, 'ranks': ranks, 'grade': grade, 'objections': objections, 'user_objections': user_objections, 'replies': replies})
 
 @login_required
 def submitted(request):
     return render(request, 'grades/submitted.html')
 
+@api_view(['GET','POST'])
 @login_required
 def reply(request, objection_id):
     """異議申立返信フォーム"""
-    objection = Objections.objects.get(id=objection_id)
-    replies = Replies.objects.filter(target=objection)
+    if request.method == 'GET':
+        objection = Objections.objects.get(id=objection_id)
+        replies = Replies.objects.filter(target=objection)
+        serializer = ObjectionsSerializer(objection, many=True)
+        replies = RepliesSerializer(replies, many=True)
+        return Response(replies.data)
 
-    if request.method == 'POST':
-        form = ReplyForm(request.POST)
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.author = request.user
-            reply.target = objection
-            reply.save()
-            reply = ReplyForm()
+    elif request.method == 'POST':
+        serializer = RepliesSerializer(request.POST, many=True)
+        if serializer.is_valid():
+            serializer.author = request.user
+            serializer.target = Objections.objects.get(id=Objection_id)
+            serializer.save()
+            return Response(serializer.data)
         return redirect('grades:submitted')
     else:
-        form = ReplyForm()
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return render(request, 'grades/reply.html', {'form': form, 'objection': objection})
 
