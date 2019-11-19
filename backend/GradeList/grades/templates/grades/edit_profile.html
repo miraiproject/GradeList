@@ -1,0 +1,8 @@
+<div>
+    <a href="{% url 'grades:profile_detail' %}">戻る</a>
+</div>
+
+<form action="{% url 'grades:edit_profile' %}" method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">保存</button>
+  </form> 

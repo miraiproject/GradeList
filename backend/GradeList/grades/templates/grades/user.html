@@ -1,0 +1,113 @@
+{% extends 'grades/base.html' %}
+
+{% block content %}
+<h2>{{ request.user.username }}さんのページ</h2>
+<a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
+<a href="{% url 'grades:profile' %}"><button>プロフィール</button></a>
+
+{% if request.user.is_authenticated %}
+<h3>あなたの成績</h3>
+<table border='1'>
+  <tr>
+    <th>ユーザー名</th>
+    <th>英語</th>
+    <th>数学</th>
+    <th>国語</th>
+    <th>GPA</th>
+  </tr>
+  <tr>
+    <td>{{ request.user.username }}</td>
+    <td>{{ grade.english }}</td>
+    <td>{{ grade.math }}</td>
+    <td>{{ grade.japanese }}</td>
+    <td>{{ grade.gpa }}</td>
+  </tr>
+</table>
+<br>
+<h3>ランキング</h3>
+<table border='1'>
+  <tr>
+    <th>順位</th>
+    <th>名前</th>
+    <th>点数</th>
+  </tr>
+  {% for rank in ranks %}
+  <tr>
+    <td>{{ rank.id }}</td>
+    <td>{{ rank.user }}</td>
+    <td>{{ rank.total }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p>平均点：{{ average }}</p>
+
+{% if not request.user.is_superuser %}
+<hr>
+<h3>異議申立内容</h3>
+{% for objection in user_objections %}
+<p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
+<p>申立内容{{ objection.text }}</p>
+<hr>
+{% for reply in objection.replies_set.all %}
+<p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
+<p>回答：{{ reply.text }}</p>
+<hr>
+{% endfor %}
+{% endfor %}
+<hr>
+<h3>異議申立入力フォーム</h3>
+<form method="POST" action="">
+  {% csrf_token %}
+  <br>
+  申立内容：
+  {{ o_form.text }}
+  <br>
+  <a href="{% url 'grades:submitted' %}">
+    <button type="submit">送信</button>
+  </a>
+</form>
+{% endif %}
+  
+{% endif %}
+<hr>
+{% if request.user.is_superuser %}
+<h3>成績入力フォーム</h3>
+<form method="POST" action="">
+  {% csrf_token %}
+  <br>
+  名前：
+  {{ g_form.user }}
+  <br>
+  英語：
+  {{ g_form.english }}
+  <br>
+  数学：
+  {{ g_form.math }}
+  <br>
+  国語：
+  {{ g_form.japanese }}
+  <br>
+  <a href="{% url 'grades:user' %}">
+    <button type="submit">保存</button>
+  </a>
+</form>
+
+<hr>
+<h3>ユーザーからの異議申立</h3>
+<br>
+{% for objection in objections %}
+<p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
+<p>申立内容：{{ objection.text }}</p>
+<a href="{% url 'grades:reply' objection_id=objection.id %}"><button>回答する</button></a>
+<hr>
+{% for reply in objection.replies_set.all %}
+<p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
+<p>回答：{{ reply.text }}</p>
+<hr>
+{% endfor %}
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
