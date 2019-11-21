@@ -1,3 +1,5 @@
 django
 djangorestframework
 wagtail
+django-cors-headers
+django-rest-swagger
