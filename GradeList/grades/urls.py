@@ -1,3 +1,4 @@
+from django.conf.urls import include
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
@@ -15,4 +16,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('logout_done/', views.done, name='logout_done'),
     path('signup/', views.signup, name='signup'),
+    path('auth/', include('social_django.urls', namespace='social')),
 ]
