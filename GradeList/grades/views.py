@@ -110,12 +110,6 @@ def reply(request, objection_id):
 
     return render(request, 'grades/reply.html', {'form': form, 'objection': objection})
 
-@login_required
-def users_detail(request):
-    userid = str(request.user.id)
-    username = request.user.username
-    return render(request, 'grades/user.html', {'username':username, 'userid':userid,})
-
 
 def done(request):
     return render(request, 'grades/logout.html')

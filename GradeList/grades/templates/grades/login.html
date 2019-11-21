@@ -16,6 +16,8 @@
             </div>
             <button type="submit">ログイン</button>
     </form>
+
+    <p>もしくは、<a href="{% url 'grades:social:begin' 'google-oauth2' %}">Googleアカウントでログイン</a></p>
     <a href="{% url 'grades:signup' %}"><button>ユーザー登録</button></a>
 </html>
 {% endblock %}
