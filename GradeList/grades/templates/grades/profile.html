@@ -1,7 +1,21 @@
 {% extends 'grades/base.html' %}
 {% block content %}
+{% if profiles == None %}
+<hr>
 <h1>個人情報登録</h1>
 <form action="{% url 'grades:profile' %}" method="POST">{% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn">保存</button>
-</form>{% endblock %}
+</form>
+<a href="{% url 'grades:user' %}"><button>戻る</button></a>
+<hr>
+{% else %}
+<h1>個人情報編集</h1>
+<form action="{% url 'grades:profile' %}" method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">保存</button>
+</form>
+<a href="{% url 'grades:user' %}"><button>戻る</button></a>
+<hr>
+{% endif %}
+{% endblock %}

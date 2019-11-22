@@ -110,12 +110,6 @@ def reply(request, objection_id):
 
     return render(request, 'grades/reply.html', {'form': form, 'objection': objection})
 
-@login_required
-def users_detail(request):
-    userid = str(request.user.id)
-    username = request.user.username
-    return render(request, 'grades/user.html', {'username':username, 'userid':userid,})
-
 
 def done(request):
     return render(request, 'grades/logout.html')
@@ -143,9 +137,9 @@ def signup(request):
 
 @login_required
 def profile(request):
-    profile_1 =  Profile.objects.filter(user__username__exact=request.user).first()
-    if profile_1 == None:
-        if request.method == "POST":
+    profiles =  Profile.objects.filter(user__username__exact=request.user).first()
+    if request.method == "POST":
+        if profiles == None:
             form = ProfileForm(request.POST)
             if form.is_valid():
                 profile = form.save(commit=False)
@@ -153,33 +147,25 @@ def profile(request):
                 profile.save()
             return redirect('grades:profile_detail')
         else:
-            form = ProfileForm
-        return render(request, 'grades/profile.html',{
-            'form':form,
-            })
+            form = ProfileForm(request.POST, instance=profiles)
+            if form.is_valid():
+                form.save()
+                return redirect('grades:profile_detail')
     else:
-        return redirect('grades:profile_done')
+        form = ProfileForm(instance=profiles)
+    return render(request, 'grades/profile.html',{
+        'form':form,
+        'profiles':profiles,
+        })
 
 @login_required
 def profile_detail(request):
     user = request.user
-    # profiles = user.profile_set.all().first()
     profiles = Profile.objects.filter(user__username__exact=request.user)
-    username = user.username
-    return render(request, 'grades/profile_detail.html', {'user':user,'profiles':profiles})
-
-@login_required
-def edit_profile(request):
-    user = request.user
-    profiles = Profile.objects.filter(user__username__exact=request.user).first()
-    if request.method == "POST":
-        form = ProfileForm(request.POST, instance=profiles)
-        if form.is_valid():
-            form.save()
-            return redirect('grades:profile_detail')
+    profile_1 = Profile.objects.filter(user__username__exact=request.user).first()
+    if profile_1 ==  None:
+        return redirect('grades:profile')
     else:
-        form = ProfileForm(instance=profiles)
-    return render(request, 'grades/edit_profile.html', {'form': form, 'user':user })
-
-def profile_done(request):
-    return render(request, 'grades/profile_done.html')
+        username = user.username
+        return render(request, 'grades/profile_detail.html', {'user':user,'profiles':profiles})
+        

@@ -3,3 +3,4 @@ djangorestframework
 wagtail
 django-cors-headers
 django-rest-swagger
+social-auth-app-django

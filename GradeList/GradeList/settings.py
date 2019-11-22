@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders',
+    'social_django',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -87,6 +88,8 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'GradeList.urls'
 
+SOCIAL_AUTH_URL_NAMESPACE = 'grades:social'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -98,10 +101,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',  # for Google authentication
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '513626435440-iqhjc7cs3nihcja90452ptmdlpkq11uc.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '1LvPIuuzFI9NikVWW2if0zMO'
 
 WSGI_APPLICATION = 'GradeList.wsgi.application'
 
