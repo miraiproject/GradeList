@@ -1,0 +1,68 @@
+header {
+    Background-color: #0ff;
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+}
+
+header h1 {
+    margin: 20px 8px;
+    color: #fff;
+    display: inline-block;
+}
+
+.header.btn {
+    float: right;
+    text-align: center;
+}
+
+.body {
+    background-color: #fff;
+    padding-top: 100px;
+}
+
+.text {
+    text-align: center;
+}
+
+.login.text {
+    padding-top: 100px;
+}
+
+.login-container {
+}
+
+.error {
+    color: #f00;
+}
+
+.logout_text {
+    text-align: center;
+}
+
+.signup_text {
+    text-align: center;
+}
+
+.objection.text {
+    margin-left: 0px;
+}
+
+.reply.text {
+    margin-left: 100px;
+}
+
+#modal {
+    background-color: #fff;
+    width: 300px;
+    margin: auto;
+    border: 1px solid;
+    z-index: 2;
+}
+
+#modal.hidden {
+    display: none;
+}

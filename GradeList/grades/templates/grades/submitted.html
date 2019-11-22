@@ -1,8 +1,10 @@
 {% extends 'grades/base.html' %}
 
 {% block content %}
+<div class="text">
 <p>送信しました。</p>
 <a href="{% url 'grades:user' %}">
   <button>戻る</button>
 </a>
+</div>
 {% endblock %}
