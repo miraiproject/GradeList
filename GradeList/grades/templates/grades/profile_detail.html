@@ -15,10 +15,10 @@
 <label>学年：</label>
 {{profile.grade}}
 <br>
-<a href="{% url 'grades:user' %}">戻る</a>
-<a href="{% url 'grades:edit_profile' %}">編集</a>
-
-
 {% endfor %}
+<a href="{% url 'grades:user' %}">マイページ</a>
+<a href="{% url 'grades:profile' %}">編集</a>
+
+
  
 {% endblock %}
