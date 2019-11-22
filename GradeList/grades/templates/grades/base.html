@@ -1,9 +1,36 @@
+{% load static %}
+
 <!DOCSTYLE html>
 <html>
   <head>
     <title>成績管理アプリ</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'grades/css/style.css' %}">
   </head>
   <body>
-    {% block content %}{% endblock %}
+    <header>
+      <h1>成績管理サイト</h1>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'grades:profile' %}" class="header btn"><button>プロフィール</button></a>
+      <button id="open" class="header btn">ログアウト</button>
+      <div id="modal" class="hidden">
+	ログアウトしますか？
+	<div id="yes"><a href="{% url 'grades:logout' %}"><button>はい</button></a></div>
+	<div id="no"><button>いいえ</button></div>
+      </div>
+      {% endif %}
+
+    </header>
+    <div class="body">{% block content %}{% endblock %}</div>
+    <script type='text/javascript'>
+      var open = document.getElementById('open');
+      var modal = document.getElementById('modal');
+      var yes = document.getElementById('yes');
+      var no = document.getElementById('no');
+
+      open.addEventListener('click', function(){modal.className='';});
+      yes.addEventListener('click', function(){modal.className='hidden';});
+      no.addEventListener('click', function(){modal.className='hidden';});
+    </script>
   </body>
+  
 </html>

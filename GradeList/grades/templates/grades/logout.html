@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<p>ログアウトしました。</p>
+<div class="logout_text">
+  <p>ログアウトしました。</p>
 
-<a href="{% url 'grades:login' %}"><button>ログイン</button></a>
+  <a href="{% url 'grades:login' %}"><button>トップに戻る</button></a>
+</div>
 {% endblock %}

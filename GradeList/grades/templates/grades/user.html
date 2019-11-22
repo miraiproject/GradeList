@@ -1,12 +1,10 @@
 {% extends 'grades/base.html' %}
 
 {% block content %}
-<h2>{{ request.user.username }}さんのページ</h2>
-<a href="{% url 'grades:logout' %}"><button>ログアウト</button></a>
-<a href="{% url 'grades:profile_detail' %}"><button>プロフィール</button></a>
-
-
+<div class="user_text">
 {% if request.user.is_authenticated %}
+<h2>{{ request.user.username }}さんのページ</h2>
+
 <h3>あなたの成績</h3>
 <table border='1'>
   <tr>
@@ -57,6 +55,7 @@
 {% endfor %}
 {% endfor %}
 <hr>
+
 <h3>異議申立入力フォーム</h3>
 <form method="POST" action="">
   {% csrf_token %}
@@ -64,14 +63,18 @@
   申立内容：
   {{ o_form.text }}
   <br>
-  <a href="{% url 'grades:submitted' %}">
-    <button type="submit">送信</button>
-  </a>
+  <button id="open">送信</button>
+  <div id="modal" class="hidden">
+    送信しますか？
+    <a id="yes" href="{% url 'grades:submitted' %}"><button type="submit">はい</button></a>
+    <button id="no">いいえ</button>
+  </div>
 </form>
 {% endif %}
   
 {% endif %}
 <hr>
+
 {% if request.user.is_superuser %}
 <h3>成績入力フォーム</h3>
 <form method="POST" action="">
@@ -98,17 +101,21 @@
 <h3>ユーザーからの異議申立</h3>
 <br>
 {% for objection in objections %}
-<p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
-<p>申立内容：{{ objection.text }}</p>
+<div class="objection text">
+  <p>{{ objection.author }}が{{ objection.created_at }}に申し立て</p>
+  <p>申立内容：{{ objection.text }}</p>
+</div>
 <a href="{% url 'grades:reply' objection_id=objection.id %}"><button>回答する</button></a>
 <hr>
 {% for reply in objection.replies_set.all %}
-<p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
-<p>回答：{{ reply.text }}</p>
+<div class="reply text">
+  <p>{{ reply.author }}が{{ reply.created_at }}に回答</p>
+  <p>回答：{{ reply.text }}</p>
+</div>
 <hr>
 {% endfor %}
 {% endfor %}
 
 {% endif %}
-
+</div>
 {% endblock %}
