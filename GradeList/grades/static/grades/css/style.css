@@ -112,11 +112,25 @@ td.userName {
     text-align: center;
 }
 
+
 .login.text {
     padding-top: 100px;
 }
 
+
+.login-username{
+    border-radius:5px;
+}
+
+.login-username-form{
+    margin-bottom:10px;
+}
+.login-pass{
+    border-radius:5px;
+}
+
 .login-container {
+    
 }
 
 .error {
@@ -142,6 +156,7 @@ td.userName {
 .reply_text {
     margin-left: 100px;
 }
+
 
 #modal {
     background-color: #fff;
@@ -183,4 +198,75 @@ footer {
     color: #fff;
     height: 50px;
     width: 100%;
+}
+
+.submit-form{
+    border-radius:10px;
+    text-align: center;
+}
+
+.submit-form-text{
+    text-align:center;
+    padding-right:70px;
+}
+
+.submit-btn{
+    text-align:center;
+    padding-right:200px;
+}
+
+/* .profile-text{
+    padding-right:900px;
+    padding-left:400px;
+} */
+
+.profile-text label{
+    font-size:20px;
+    padding-left:400px;
+}
+
+
+.profile-text p{
+    margin-bottom:40px;
+    padding-left:400px;
+}
+
+.profile-logo{
+    background-color:#0ff;
+
+}
+
+.profile-edit{
+    text-align:center;
+}
+
+.profile-signup{
+    text-align:center;
+}
+
+.signup_text button{
+    margin-top:10px;
+}
+
+.signup-username{
+    margin-top:20px;
+    margin-bottom:20px;
+    border-radius:5px;
+    margin-right:40px;
+}
+
+.signup-pass{
+    margin-bottom:20px;
+    border-radius:5px;
+    margin-right:35px;
+
+}
+
+.signup-pass2{
+    border-radius:5px;
+    margin-right:78px;
+}
+
+.edit-number{
+    margin-right:70px;
 }

@@ -1,26 +1,26 @@
 {% extends 'grades/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 <div class="signup_text">
 <h2>ユーザー登録</h2>
 
-<form method="post" action="{% url 'grades:signup' %}">{% csrf_token %}
+<form method="post"  action="{% url 'grades:signup' %}">{% csrf_token %}
     <label>ユーザー名</label>
-    {{ form.username }}
+    {{ form.username | add_class:"signup-username" }}
     {{ form.username.errors }}
     <br>
     <label>パスワード</label>
-    {{ form.password1 }}
+    {{ form.password1 | add_class:"signup-pass" }}
     {{ form.password1.errors }}
     <br>
     <label>パスワード(確認)</label>
-    {{ form.password2 }}
+    {{ form.password2 | add_class:"signup-pass2" }}
     {{ form.password2.errors }}
     <br>
     <button type="submit">登録する</button>
+    <p>ログインは<a href="{% url 'grades:login' %}">こちら</a></p>
 </form>
 
-<p>ログインは<a href="{% url 'grades:login' %}">こちら</a></p>
 </div>
 
 {% endblock %}

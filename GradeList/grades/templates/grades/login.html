@@ -8,11 +8,15 @@
                 <p class="error">ユーザー名かパスワードが間違っています。もう一度入力してください。</p>
             {% endif %}
             <div class = "login-container">
-            <label>ユーザー名</label>
-            <input name="username">
+              <div class="login-username-form">
+                <label>ユーザー名</label>
+                <input class="login-username" name="username">
+              </div>
             <br>
+            <div class="login-pass-form">
             <label>パスワード</label>
-            <input type="password" name="password">
+            <input class="login-pass" type="password" name="password">
+            </div>
             <br>
             </div>
 	    <br>

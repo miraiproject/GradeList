@@ -1,5 +1,5 @@
 {% extends 'grades/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 {% if request.user.is_authenticated %}
 <h2 class="mypage">{{ request.user.username }}さんのページ</h2>
@@ -47,6 +47,7 @@
 {% if not request.user.is_superuser %}
 <hr><br>
 <h3>異議申立内容</h3>
+
 <br>
 <div class="objection_text">
   {% for objection in user_objections %}
@@ -65,13 +66,17 @@
 <hr><br>
 
 <h3>異議申立入力フォーム</h3>
+<div class="submit-form-text">
 <form method="POST" action="">
   {% csrf_token %}
   <br>
   申立内容：
-  {{ o_form.text }}
+  {{ o_form.text|add_class:'submit-form'}}
   <br>
+</div>
+<div class="submit-btn">
   <button id="open">送信</button>
+</div>
   <div id="modal" class="hidden">
     送信しますか？
     <a id="yes" href="{% url 'grades:submitted' %}"><button type="submit">はい</button></a>

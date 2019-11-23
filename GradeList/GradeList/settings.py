@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'taggit',
     
     'grades',
+    #formにcssを適用させるやつ
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
