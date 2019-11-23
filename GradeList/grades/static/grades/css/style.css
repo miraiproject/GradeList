@@ -52,6 +52,11 @@ button:hover {
     height: 50px;
 }
 
+.mypage {
+    display: inline-block;
+    margin-left: 30px;
+}
+
 h3 {
     text-align: center;
 }
@@ -88,10 +93,14 @@ td.userName {
     text-align: center;
 }
 
-button.submit {
+.submit {
+    margin: auto;
+}
+
+.submit_btn {
     width: 60px;
     height: 40px;
-    margin: auto;
+    margin: 0 50%;
 }
 
 .reply.btn {
