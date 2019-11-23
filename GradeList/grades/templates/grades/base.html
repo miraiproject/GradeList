@@ -10,17 +10,22 @@
     <header>
       <h1>成績管理サイト</h1>
       {% if request.user.is_authenticated %}
-      <a href="{% url 'grades:profile' %}" class="header btn"><button>プロフィール</button></a>
-      <button id="open" class="header btn">ログアウト</button>
+      <button id="open" class="header btn logout">ログアウト</button>
+      <a href="{% url 'grades:profile' %}"><button class="header btn profile">プロフィール</button></a>
       <div id="modal" class="hidden">
-	ログアウトしますか？
-	<div id="yes"><a href="{% url 'grades:logout' %}"><button>はい</button></a></div>
-	<div id="no"><button>いいえ</button></div>
+	<p class="modalText">ログアウトしますか？</p>
+	<div class="yesno">
+	  <a href="{% url 'grades:logout' %}"><button id="yes" class="yes">はい</button></a>
+	  <button id="no" class="no">いいえ</button>
+	</div>
       </div>
       {% endif %}
 
     </header>
     <div class="body">{% block content %}{% endblock %}</div>
+    <footer>
+      <h3>成績管理サイト</h3>
+    </footer>
     <script type='text/javascript'>
       var open = document.getElementById('open');
       var modal = document.getElementById('modal');
