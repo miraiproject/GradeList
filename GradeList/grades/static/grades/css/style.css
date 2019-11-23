@@ -43,6 +43,18 @@ button:hover {
 .body {
     background-color: #fff;
     padding-top: 100px;
+    padding-bottom: 50px;
+    margin-bottom: -50px;
+    min-height: 100%;
+}
+
+.push {
+    height: 50px;
+}
+
+.mypage {
+    display: inline-block;
+    margin-left: 30px;
 }
 
 h3 {
@@ -78,13 +90,17 @@ td.userName {
 }
 
 .form {
-    display: inline-block;
-    margin: 10px;
+    text-align: center;
 }
 
-button.submit {
+.submit {
+    margin: auto;
+}
+
+.submit_btn {
     width: 60px;
     height: 40px;
+    margin: 0 50%;
 }
 
 .reply.btn {
@@ -129,11 +145,15 @@ button.submit {
     text-align: center;
 }
 
-.objection.text {
-    margin-left: 0px;
+.objection_index {
+    font-weight: bold;
 }
 
-.reply.text {
+.objection_text {
+    margin: 0 25%;
+}
+
+.reply_text {
     margin-left: 100px;
 }
 
@@ -144,12 +164,19 @@ button.submit {
     height: 200px;
     margin: auto;
     border: 1px solid;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: fixed;
     z-index: 2;
 }
 
 .modalText {
     display: inline-block;
-    margin: 10px 100px;
+    margin: 40px 100px;
 }
 
 .yesno {
