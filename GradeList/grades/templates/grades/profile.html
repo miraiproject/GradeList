@@ -1,21 +1,34 @@
 {% extends 'grades/base.html' %}
+{% load widget_tweaks %}
 {% block content %}
 {% if profiles == None %}
 <hr>
 <h1>個人情報登録</h1>
+<div classs="profile-signup">
 <form action="{% url 'grades:profile' %}" method="POST">{% csrf_token %}
-    {{ form.as_p }}
+    <p>名前：{{form.name|add_class:'edit-name'}}</p>
+    <p>学籍番号：{{form.student_number|add_class:'edit-number'}}</p>
+    <p>学部・専攻：{{form.major|add_class:'edit-major'}}</p>
+    <p>学年：{{form.grade|add_class:'edit-grade'}}</p>
+
     <button type="submit" class="btn">保存</button>
 </form>
 <a href="{% url 'grades:user' %}"><button>戻る</button></a>
 <hr>
+</div>>
 {% else %}
 <h1>個人情報編集</h1>
+<div class="profile-edit">
 <form action="{% url 'grades:profile' %}" method="POST">{% csrf_token %}
-    {{ form.as_p }}
+    <p>名前：{{form.name|add_class:'edit-name'}}</p>
+    <p>学籍番号：{{form.student_number|add_class:'edit-number'}}</p>
+    <p>学部・専攻：{{form.major|add_class:'edit-major'}}</p>
+    <p>学年：{{form.grade|add_class:'edit-grade'}}</p>
     <button type="submit" class="btn">保存</button>
+    <a href="{% url 'grades:user' %}"><button class = "btn">戻る</button></a>
+
 </form>
-<a href="{% url 'grades:user' %}"><button>戻る</button></a>
 <hr>
+</div>
 {% endif %}
 {% endblock %}

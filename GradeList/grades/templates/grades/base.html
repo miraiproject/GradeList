@@ -11,7 +11,7 @@
       <h1>成績管理サイト</h1>
       {% if request.user.is_authenticated %}
       <button id="open" class="header btn logout">ログアウト</button>
-      <a href="{% url 'grades:profile' %}"><button class="header btn profile">プロフィール</button></a>
+      <a href="{% url 'grades:profile_detail' %}"><button class="header btn profile">プロフィール</button></a>
       <div id="modal" class="hidden">
 	<p class="modalText">ログアウトしますか？</p>
 	<div class="yesno">

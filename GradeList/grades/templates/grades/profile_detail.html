@@ -1,23 +1,19 @@
 {% extends 'grades/base.html' %}
+{% load widget_tweaks %}
+
 {% block content %}
 <h2 class="user-name">{{ user.username }}さんのプロフィール</h2>
-
+<div class="profile-text">
 {% for profile in profiles %}
-<label>名前：</label>
-{{profile.name}}
-<br>
-<label>学籍番号：</label>
-{{profile.student_number}}
-<br>
-<label>学部・専攻：</label>
-{{profile.major}}
-<br>
-<label>学年：</label>
-{{profile.grade}}
-<br>
+<p>名前　　　　　　　　　　　　｜　　　　　　　{{profile.name}}</p>
+<p>学籍番号　　　　　　　　　　｜　　　　　　　{{profile.student_number}}</p>
+<p>学部・専攻　　　 　 　　　　　｜　　　　　　　{{profile.major}}学部</p>
+<p>学年　　　　　　　　　　　　｜　　　　　　　{{profile.grade}}回生</p>
 {% endfor %}
-<a href="{% url 'grades:user' %}">マイページ</a>
-<a href="{% url 'grades:profile' %}">編集</a>
+</div>
+<a href="{% url 'grades:user' %}"><button>マイページ</button></a>
+<a href="{% url 'grades:profile' %}"><button>編集</button></a>
+
 
 
  

@@ -1,5 +1,5 @@
 {% extends 'grades/base.html' %}
-
+{% load widget_tweaks %}
 {% block content %}
 <div class="user_text">
 {% if request.user.is_authenticated %}
@@ -59,15 +59,18 @@
 {% endfor %}
 {% endfor %}
 <hr>
-
 <h3>異議申立入力フォーム</h3>
+<div class="submit-form-text">
 <form method="POST" action="">
   {% csrf_token %}
   <br>
   申立内容：
-  {{ o_form.text }}
+  {{ o_form.text|add_class:'submit-form'}}
   <br>
+</div>
+<div class="submit-btn">
   <button id="open">送信</button>
+</div>
   <div id="modal" class="hidden">
     送信しますか？
     <a id="yes" href="{% url 'grades:submitted' %}"><button type="submit">はい</button></a>
