@@ -41,7 +41,7 @@ def user(request):
         grades[i].gpa = 0.0
         grades[i].save()
         totals.append(grades[i].total)
-    average = sum(totals) /  len(grades)
+    average = round(sum(totals) /  len(grades), 1)
     ranks = Grades.objects.all().order_by('-total')
     for i in range(len(ranks)):
         ranks[i].id = i + 1
