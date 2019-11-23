@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'x^mh!3#h1=xioyfqn(=1)%7sq%g$u9v7px7m^(f+=lmxye6)qm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -39,26 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #以下を追加
-    'rest_framework',
-    'rest_framework_swagger',
-    'corsheaders',
     'social_django',
 
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
-
-    'modelcluster',
-    'taggit',
-    
     'grades',
     #formにcssを適用させるやつ
     'widget_tweaks',
@@ -73,20 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    #以下を追加
-    'corsheaders.middleware.CorsMiddleware',
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
-
-CORS_ORIGIN_WHITELIST = (
-    'https://127.0.0.1:3000',
-    'https://127.0.0.1:8000',
-)
-
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-}
 
 ROOT_URLCONF = 'GradeList.urls'
 
@@ -175,8 +144,6 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-WAGTAIL_SITE_NAME = 'Grade List'
 
 #ログイン、ログアウト
 LOGIN_URL = 'grades:login'
